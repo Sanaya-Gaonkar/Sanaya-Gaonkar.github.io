@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sanaya Gaonkar | Computer Engineering Student</title>
+
+    <meta name="description"
+          content="Portfolio of Sanaya Gaonkar, a Computer Engineering student interested in software development, web technologies, and creative problem-solving.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --background: #0d0b16;
+            --surface: #171326;
+            --surface-light: #211b35;
+            --primary: #c5a7ff;
+            --secondary: #f2b5d4;
+            --text: #f8f5ff;
+            --muted: #aaa1bd;
+            --border: rgba(197, 167, 255, 0.2);
+            --gradient: linear-gradient(135deg, #c5a7ff, #f2b5d4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            font-family: "DM Sans", sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        a,
+        button {
+            cursor: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s ease,
+                        height 0.2s ease,
+                        background 0.2s ease;
+        }
+
+        .cursor.active {
+            width: 35px;
+            height: 35px;
+            background: rgba(197, 167, 255, 0.15);
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        .section {
+            padding: 110px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 45px;
+        }
+
+        .section-label {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Space Grotesk", sans-serif;
+            line-height: 1.15;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+        }
+
+        p {
+            color: var(--muted);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 24px 0;
+            z-index: 1000;
+            background: rgba(13, 11, 22, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(197, 167, 255, 0.08);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 100px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: rgba(197, 167, 255, 0.12);
+            filter: blur(120px);
+            border-radius: 50%;
+            top: 10%;
+            right: -150px;
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            padding: 8px 15px;
+            border-radius: 30px;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            letter-spacing: -3px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            max-width: 650px;
+            font-size: 1.15rem;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease,
+                        background 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-light);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 18px;
+        }
+
+        .about-card {
+            padding: 35px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 15px;
+            margin: 18px 0;
+            align-items: flex-start;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            width: 20px;
+            margin-top: 5px;
+        }
+
+        .info-item span {
+            color: var(--muted);
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill {
+            padding: 12px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            color: var(--text);
+            transition: background 0.3s ease,
+                        transform 0.3s ease;
+        }
+
+        .skill:hover {
+            background: var(--surface-light);
+            transform: translateY(-3px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 30px;
+            min-height: 310px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transform-style: preserve-3d;
+            transition: border-color 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+        }
+
+        .project-number {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .project-card h3 {
+            font-size: 1.65rem;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            margin-bottom: 25px;
+        }
+
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .project-type {
+            color: var(--secondary);
+            font-size: 0.85rem;
+        }
+
+        .project-link {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .project-link i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .project-link:hover i {
+            transform: translateX(5px);
+        }
+
+        .contact-box {
+            text-align: center;
+            padding: 70px 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+        }
+
+        .contact-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .contact-box p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: var(--muted);
+            transition: color 0.3s ease,
+                        background 0.3s ease,
+                        transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--background);
+            background: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 0;
+            border-top: 1px solid rgba(197, 167, 255, 0.1);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+
+            .cursor {
+                display: none;
+            }
+
+            a,
+            button {
+                cursor: pointer;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .about-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                gap: 30px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 18px 0;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 0.72rem;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .about-card,
+            .project-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="#home" class="logo">SG.</a>
+
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-tag">Computer Engineering Student</div>
+
+                <h1>
+                    Hi, I'm <span>Sanaya.</span><br>
+                    I build things<br>
+                    for the web.
+                </h1>
+
+                <p class="hero-description">
+                    I am a Computer Engineering student who enjoys exploring
+                    software development, web technologies, and creative ways
+                    to solve real-world problems through technology.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        View My Projects
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+
+                    <a href="mailto:sanayagaonkar13@gmail.com"
+                       class="btn btn-secondary">
+                        Get In Touch
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-heading">
+                <div class="section-label">01 / About Me</div>
+                <h2>A little about me.</h2>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        I am Sanaya Gaonkar, a Computer Engineering student
+                        with an interest in developing useful, interactive,
+                        and user-friendly digital solutions.
+                    </p>
+
+                    <p>
+                        I enjoy learning new technologies, experimenting with
+                        different development tools, and working on projects
+                        that combine logical thinking with creativity.
+                    </p>
+
+                    <p>
+                        I am continuously improving my technical skills while
+                        exploring opportunities to gain practical experience
+                        in software and web development.
+                    </p>
+                </div>
+
+                <div class="about-card">
+                    <h3>Quick Details</h3>
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Sanaya Gaonkar</span>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Computer Engineering Student</span>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Goa, India</span>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>sanayagaonkar13@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <div class="container">
+            <div class="section-heading">
+                <div class="section-label">02 / Skills</div>
+                <h2>Tools I work with.</h2>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill">HTML</div>
+                <div class="skill">CSS</div>
+                <div class="skill">JavaScript</div>
+                <div class="skill">PHP</div>
+                <div class="skill">Java</div>
+                <div class="skill">Python</div>
+                <div class="skill">Angular</div>
+                <div class="skill">MySQL</div>
+                <div class="skill">GitHub</div>
+                <div class="skill">REST APIs</div>
+                <div class="skill">Responsive Design</div>
+                <div class="skill">Problem Solving</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="section-heading">
+                <div class="section-label">03 / Projects</div>
+                <h2>Things I've built.</h2>
+            </div>
+
+            <div class="projects-grid">
+
+                <!-- Project 1 -->
+                <article class="project-card">
+                    <div>
+                        <div class="project-number">PROJECT 01</div>
+
+                        <h3>EcoCheck Quiz</h3>
+
+                        <p>
+                            An interactive quiz project designed to encourage
+                            environmental awareness through engaging questions
+                            and an easy-to-use interface alongwith a persoanlized carbon footprint calculator..
+                        </p>
+                    </div>
+
+                    <div class="project-footer">
+                        <span class="project-type">Web Project</span>
+
+                        <a href="https://github.com/Sanaya-Gaonkar"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="project-link">
+                            View on GitHub
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-card">
+                    <div>
+                        <div class="project-number">PROJECT 02</div>
+
+                        <h3>Student Marketplace</h3>
+
+                        <p>
+                            A student-focused marketplace concept that allows
+                            users to explore and exchange products through a
+                            simple and accessible web interface.
+                        </p>
+                    </div>
+
+                    <div class="project-footer">
+                        <span class="project-type">Web Application</span>
+
+                        <a href="https://github.com/Sanaya-Gaonkar"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="project-link">
+                            View on GitHub
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="contact-box">
+                <div class="section-label">04 / Contact</div>
+
+                <h2>Let's connect.</h2>
+
+                <p>
+                    I am always open to learning, collaborating on interesting
+                    projects, and exploring new opportunities in technology.
+                </p>
+
+                <a href="mailto:sanayagaonkar13@gmail.com"
+                   class="btn btn-primary">
+                    Email Me
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+
+                <div class="social-links">
+                    <a href="https://github.com/Sanaya-Gaonkar"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/sanaya-gaonkar-616547396"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="mailto:sanayagaonkar13@gmail.com"
+                       aria-label="Email">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>
+                © <span id="year"></span> Sanaya Gaonkar. Built with curiosity
+                and creativity.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Update footer year
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+        // Custom cursor
+        const cursor = document.querySelector(".cursor");
+
+        document.addEventListener("mousemove", function(event) {
+            cursor.style.left = event.clientX + "px";
+            cursor.style.top = event.clientY + "px";
+        });
+
+        document.querySelectorAll("a, button").forEach(function(element) {
+            element.addEventListener("mouseenter", function() {
+                cursor.classList.add("active");
+            });
+
+            element.addEventListener("mouseleave", function() {
+                cursor.classList.remove("active");
+            });
+        });
+
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero animations
+        gsap.from(".hero-tag", {
+            opacity: 0,
+            y: 25,
+            duration: 0.8,
+            ease: "power3.out"
+        });
+
+        gsap.from(".hero h1", {
+            opacity: 0,
+            y: 45,
+            duration: 1,
+            delay: 0.2,
+            ease: "power3.out"
+        });
+
+        gsap.from(".hero-description", {
+            opacity: 0,
+            y: 25,
+            duration: 0.8,
+            delay: 0.4,
+            ease: "power3.out"
+        });
+
+        gsap.from(".hero-buttons", {
+            opacity: 0,
+            y: 25,
+            duration: 0.8,
+            delay: 0.6,
+            ease: "power3.out"
+        });
+
+        // Section animations
+        gsap.utils.toArray(".section-heading").forEach(function(section) {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%"
+                },
+                opacity: 0,
+                y: 35,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+
+        gsap.utils.toArray(".about-text, .about-card").forEach(function(item) {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 85%"
+                },
+                opacity: 0,
+                y: 35,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+
+        gsap.from(".skill", {
+            scrollTrigger: {
+                trigger: ".skills-grid",
+                start: "top 85%"
+            },
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power2.out"
+        });
+
+        gsap.from(".project-card", {
+            scrollTrigger: {
+                trigger: ".projects-grid",
+                start: "top 85%"
+            },
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        gsap.from(".contact-box", {
+            scrollTrigger: {
+                trigger: ".contact-box",
+                start: "top 85%"
+            },
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            ease: "power3.out"
+        });
+
+        // 3D project card tilt effect
+        document.querySelectorAll(".project-card").forEach(function(card) {
+            card.addEventListener("mousemove", function(event) {
+                const rect = card.getBoundingClientRect();
+
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -4;
+                const rotateY = ((x - centerX) / centerX) * 4;
+
+                card.style.transform =
+                    `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener("mouseleave", function() {
+                card.style.transform =
+                    "perspective(900px) rotateX(0deg) rotateY(0deg)";
+            });
+        });
+    </script>
+
+</body>
+</html>
