@@ -1,910 +1,1065 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sanaya Gaonkar | Computer Engineering Student</title>
-
-    <meta name="description"
-          content="Portfolio of Sanaya Gaonkar, a Computer Engineering student interested in software development, web technologies, and creative problem-solving.">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-    <style>
-        :root {
-            --background: #0d0b16;
-            --surface: #171326;
-            --surface-light: #211b35;
-            --primary: #c5a7ff;
-            --secondary: #f2b5d4;
-            --text: #f8f5ff;
-            --muted: #aaa1bd;
-            --border: rgba(197, 167, 255, 0.2);
-            --gradient: linear-gradient(135deg, #c5a7ff, #f2b5d4);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--background);
-            color: var(--text);
-            font-family: "DM Sans", sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        ::selection {
-            background: var(--primary);
-            color: var(--background);
-        }
-
-        a,
-        button {
-            cursor: none;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .cursor {
-            position: fixed;
-            width: 14px;
-            height: 14px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s ease,
-                        height 0.2s ease,
-                        background 0.2s ease;
-        }
-
-        .cursor.active {
-            width: 35px;
-            height: 35px;
-            background: rgba(197, 167, 255, 0.15);
-        }
-
-        .container {
-            width: min(1120px, 90%);
-            margin: auto;
-        }
-
-        .section {
-            padding: 110px 0;
-        }
-
-        .section-heading {
-            margin-bottom: 45px;
-        }
-
-        .section-label {
-            color: var(--primary);
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-family: "Space Grotesk", sans-serif;
-            line-height: 1.15;
-        }
-
-        h2 {
-            font-size: clamp(2rem, 5vw, 3.4rem);
-        }
-
-        p {
-            color: var(--muted);
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 24px 0;
-            z-index: 1000;
-            background: rgba(13, 11, 22, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(197, 167, 255, 0.08);
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: "Space Grotesk", sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding-top: 100px;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 450px;
-            height: 450px;
-            background: rgba(197, 167, 255, 0.12);
-            filter: blur(120px);
-            border-radius: 50%;
-            top: 10%;
-            right: -150px;
-            z-index: -1;
-        }
-
-        .hero-content {
-            max-width: 850px;
-        }
-
-        .hero-tag {
-            display: inline-block;
-            color: var(--primary);
-            border: 1px solid var(--border);
-            padding: 8px 15px;
-            border-radius: 30px;
-            margin-bottom: 25px;
-            font-size: 0.85rem;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6.5rem);
-            letter-spacing: -3px;
-            margin-bottom: 25px;
-        }
-
-        .hero h1 span {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-description {
-            max-width: 650px;
-            font-size: 1.15rem;
-            margin-bottom: 35px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 13px 22px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: 1px solid var(--border);
-            transition: transform 0.3s ease,
-                        background 0.3s ease;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--background);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-        }
-
-        .btn:hover {
-            transform: translateY(-4px);
-        }
-
-        .btn-secondary:hover {
-            background: var(--surface-light);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-text p {
-            margin-bottom: 18px;
-        }
-
-        .about-card {
-            padding: 35px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-        }
-
-        .about-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .info-item {
-            display: flex;
-            gap: 15px;
-            margin: 18px 0;
-            align-items: flex-start;
-        }
-
-        .info-item i {
-            color: var(--primary);
-            width: 20px;
-            margin-top: 5px;
-        }
-
-        .info-item span {
-            color: var(--muted);
-        }
-
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .skill {
-            padding: 12px 18px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            color: var(--text);
-            transition: background 0.3s ease,
-                        transform 0.3s ease;
-        }
-
-        .skill:hover {
-            background: var(--surface-light);
-            transform: translateY(-3px);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .project-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 30px;
-            min-height: 310px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transform-style: preserve-3d;
-            transition: border-color 0.3s ease;
-        }
-
-        .project-card:hover {
-            border-color: var(--primary);
-        }
-
-        .project-number {
-            color: var(--primary);
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-
-        .project-card h3 {
-            font-size: 1.65rem;
-            margin-bottom: 15px;
-        }
-
-        .project-card p {
-            margin-bottom: 25px;
-        }
-
-        .project-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .project-type {
-            color: var(--secondary);
-            font-size: 0.85rem;
-        }
-
-        .project-link {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .project-link i {
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .project-link:hover i {
-            transform: translateX(5px);
-        }
-
-        .contact-box {
-            text-align: center;
-            padding: 70px 25px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-        }
-
-        .contact-box h2 {
-            margin-bottom: 20px;
-        }
-
-        .contact-box p {
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-            margin-top: 30px;
-        }
-
-        .social-links a {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            color: var(--muted);
-            transition: color 0.3s ease,
-                        background 0.3s ease,
-                        transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--background);
-            background: var(--primary);
-            transform: translateY(-4px);
-        }
-
-        footer {
-            text-align: center;
-            padding: 35px 0;
-            border-top: 1px solid rgba(197, 167, 255, 0.1);
-        }
-
-        footer p {
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                cursor: auto;
-            }
-
-            .cursor {
-                display: none;
-            }
-
-            a,
-            button {
-                cursor: pointer;
-            }
-
-            .nav-links {
-                gap: 14px;
-            }
-
-            .nav-links a {
-                font-size: 0.8rem;
-            }
-
-            .hero h1 {
-                letter-spacing: -1px;
-            }
-
-            .about-grid,
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .about-grid {
-                gap: 30px;
-            }
-
-            .section {
-                padding: 80px 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .navbar {
-                padding: 18px 0;
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
-
-            .nav-links {
-                gap: 10px;
-            }
-
-            .nav-links a {
-                font-size: 0.72rem;
-            }
-
-            .hero {
-                padding-top: 120px;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .about-card,
-            .project-card {
-                padding: 24px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100e19">
+  <meta name="description" content="Portfolio of Sanaya Gaonkar, a Computer Engineering student interested in software development and AI-powered applications.">
+  <title>Sanaya Gaonkar | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --background: #100e19;
+      --surface: #191624;
+      --surface-raised: #211d30;
+      --primary: #c6adff;
+      --secondary: #f1b8d7;
+      --text: #f7f4ff;
+      --muted: #b2abc4;
+      --border: rgba(198, 173, 255, .17);
+      --gradient: linear-gradient(120deg, #c6adff 5%, #f1b8d7 95%);
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 92px;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 82% 8%, rgba(156, 113, 225, .13), transparent 32%),
+        radial-gradient(ellipse at 8% 42%, rgba(218, 139, 190, .07), transparent 27%);
+    }
+
+    ::selection {
+      background: var(--primary);
+      color: #100e19;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--max-width), 90%);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 104px 0;
+    }
+
+    .section-heading {
+      max-width: 680px;
+      margin-bottom: 38px;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3, .brand {
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 1.15;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4.6vw, 3.15rem);
+      letter-spacing: -.04em;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .section-intro {
+      margin-top: 15px;
+      max-width: 610px;
+    }
+
+    .navbar {
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-bottom: 1px solid rgba(198, 173, 255, .1);
+      background: rgba(16, 14, 25, .88);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-content {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      color: var(--primary);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -.05em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 29px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: .92rem;
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--primary);
+    }
+
+    .menu-toggle {
+      display: none;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 145px 0 95px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(245px, .65fr);
+      align-items: center;
+      gap: 54px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(198, 173, 255, .055);
+      font-size: .83rem;
+      margin-bottom: 24px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #8ed6b0;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(142, 214, 176, .1);
+    }
+
+    .hero h1 {
+      font-size: clamp(3.1rem, 7.1vw, 6rem);
+      letter-spacing: -.075em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      max-width: 660px;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 31px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 19px;
+      font-weight: 700;
+      font-size: .92rem;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #171321;
+      border-color: transparent;
+    }
+
+    .button-primary:hover {
+      background: #d6c5ff;
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, .025);
+      color: var(--text);
+    }
+
+    .button-secondary:hover {
+      background: var(--surface-raised);
+    }
+
+    .hero-note {
+      margin-top: 26px;
+      font-size: .86rem;
+    }
+
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(33, 29, 48, .95), rgba(25, 22, 36, .85));
+      box-shadow: 0 25px 80px rgba(0, 0, 0, .18);
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(198, 173, 255, .12);
+      filter: blur(40px);
+      right: -80px;
+      top: -80px;
+    }
+
+    .panel-label {
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+    }
+
+    .panel-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.35rem;
+      margin: 9px 0 21px;
+    }
+
+    .focus-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .focus-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid rgba(198, 173, 255, .1);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .025);
+    }
+
+    .focus-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(198, 173, 255, .11);
+      color: var(--primary);
+    }
+
+    .focus-item strong {
+      display: block;
+      font-size: .9rem;
+    }
+
+    .focus-item span:last-child {
+      display: block;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-copy p + p {
+      margin-top: 16px;
+    }
+
+    .detail-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface);
+      padding: 27px;
+    }
+
+    .detail-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 19px;
+    }
+
+    .detail-row {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      margin: 15px 0;
+      color: var(--muted);
+      font-size: .93rem;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-row i {
+      color: var(--primary);
+      width: 18px;
+      margin-top: 5px;
+    }
+
+    .skills-groups-single {
+      display: block;
+    }
+
+    .skill-group {
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(25, 22, 36, .72);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+    }
+
+    .skill-tag {
+      color: #e8e1f6;
+      border: 1px solid rgba(198, 173, 255, .14);
+      background: rgba(198, 173, 255, .055);
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: .83rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 300px;
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      background: linear-gradient(145deg, rgba(33, 29, 48, .8), rgba(25, 22, 36, .9));
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(198, 173, 255, .48);
+      background: var(--surface);
+    }
+
+    .project-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 23px;
+    }
+
+    .project-number {
+      color: var(--primary);
+      font-size: .77rem;
+      letter-spacing: .12em;
+      font-weight: 700;
+    }
+
+    .project-icon {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      border-radius: 12px;
+      background: rgba(198, 173, 255, .1);
+      color: var(--primary);
+      font-size: 1.05rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.42rem;
+      margin-bottom: 12px;
+    }
+
+    .project-card p {
+      font-size: .94rem;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .project-tech span {
+      font-size: .74rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .035);
+      border-radius: 6px;
+      padding: 4px 8px;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid rgba(198, 173, 255, .1);
+    }
+
+    .project-type {
+      color: var(--secondary);
+      font-size: .8rem;
+    }
+
+    .project-link {
+      color: var(--primary);
+      font-size: .88rem;
+      font-weight: 700;
+    }
+
+    .project-link i {
+      margin-left: 5px;
+    }
+
+    .contact-box {
+      text-align: center;
+      padding: clamp(32px, 7vw, 66px) 25px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: radial-gradient(ellipse at top, rgba(198, 173, 255, .09), transparent 65%), var(--surface);
+    }
+
+    .contact-box h2 {
+      margin-bottom: 17px;
+    }
+
+    .contact-box > p {
+      max-width: 570px;
+      margin: 0 auto 25px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .social-links a {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--muted);
+      transition: all .2s ease;
+    }
+
+    .social-links a:hover {
+      color: #171321;
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    footer {
+      border-top: 1px solid rgba(198, 173, 255, .1);
+      padding: 25px 0;
+      text-align: center;
+      font-size: .84rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--secondary);
+      outline-offset: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .section {
+        padding: 82px 0;
+      }
+
+      .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .hero-panel {
+        max-width: 560px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .nav-content {
+        min-height: 68px;
+      }
+
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 0;
+        right: 0;
+        padding: 18px 5% 22px;
+        background: rgba(16, 14, 25, .98);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 132px 0 70px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.8rem, 14vw, 4.7rem);
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card {
+        min-height: auto;
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <header class="navbar">
+    <nav class="container nav-content" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Sanaya Gaonkar home">SG.</a>
 
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
 
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="container nav-content">
-            <a href="#home" class="logo">SG.</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
+  <main>
     <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-tag">Computer Engineering Student</div>
+      <div class="container hero-layout">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span class="status-dot" aria-hidden="true"></span>
+            Computer Engineering Student
+          </div>
 
-                <h1>
-                    Hi, I'm <span>Sanaya.</span><br>
-                    I build things<br>
-                    for the web.
-                </h1>
+          <h1>
+            Hi, I'm <span class="gradient-text">Sanaya.</span><br>
+            Building useful<br>
+            digital experiences.
+          </h1>
 
-                <p class="hero-description">
-                    I am a Computer Engineering student who enjoys exploring
-                    software development, web technologies, and creative ways
-                    to solve real-world problems through technology.
-                </p>
+          <p class="hero-description">
+            I’m a Computer Engineering student interested in software development,
+            web technologies, and AI-powered applications. I enjoy turning ideas
+            into practical, user-friendly solutions and learning something new
+            with every project.
+          </p>
 
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary">
-                        View My Projects
-                        <i class="fa-solid fa-arrow-down"></i>
-                    </a>
+          <div class="hero-actions">
+            <a href="#projects" class="button button-primary">
+              Explore my projects
+              <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+            </a>
 
-                    <a href="mailto:sanayagaonkar13@gmail.com"
-                       class="btn btn-secondary">
-                        Get In Touch
-                        <i class="fa-solid fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
+            <a href="mailto:sanayagaonkar13@gmail.com" class="button button-secondary">
+              Get in touch
+              <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+            </a>
+          </div>
+
+          <p class="hero-note">
+            Currently learning, building, and looking for opportunities to grow.
+          </p>
         </div>
+
+        <aside class="hero-panel" aria-label="Areas of interest">
+          <div class="panel-label">What I enjoy working on</div>
+          <div class="panel-title">Curiosity → Code → Solutions</div>
+
+          <div class="focus-list">
+            <div class="focus-item">
+              <span class="focus-icon"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
+              <div>
+                <strong>Web Development</strong>
+                <span>Building responsive applications</span>
+              </div>
+            </div>
+
+            <div class="focus-item">
+              <span class="focus-icon"><i class="fa-solid fa-brain" aria-hidden="true"></i></span>
+              <div>
+                <strong>AI & Data-Driven Tools</strong>
+                <span>Making information more useful</span>
+              </div>
+            </div>
+
+            <div class="focus-item">
+              <span class="focus-icon"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i></span>
+              <div>
+                <strong>Problem Solving</strong>
+                <span>Learning by building real projects</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <!-- About Section -->
     <section class="section" id="about">
-        <div class="container">
-            <div class="section-heading">
-                <div class="section-label">01 / About Me</div>
-                <h2>A little about me.</h2>
-            </div>
-
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>
-                        I am Sanaya Gaonkar, a Computer Engineering student
-                        with an interest in developing useful, interactive,
-                        and user-friendly digital solutions.
-                    </p>
-
-                    <p>
-                        I enjoy learning new technologies, experimenting with
-                        different development tools, and working on projects
-                        that combine logical thinking with creativity.
-                    </p>
-
-                    <p>
-                        I am continuously improving my technical skills while
-                        exploring opportunities to gain practical experience
-                        in software and web development.
-                    </p>
-                </div>
-
-                <div class="about-card">
-                    <h3>Quick Details</h3>
-
-                    <div class="info-item">
-                        <i class="fa-solid fa-user"></i>
-                        <span>Sanaya Gaonkar</span>
-                    </div>
-
-                    <div class="info-item">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                        <span>Computer Engineering Student</span>
-                    </div>
-
-                    <div class="info-item">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span>Goa, India</span>
-                    </div>
-
-                    <div class="info-item">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span>sanayagaonkar13@gmail.com</span>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="eyebrow">01 / About me</div>
+          <h2>A little about me.</h2>
+          <p class="section-intro">
+            A student developer who likes combining logical thinking with thoughtful design.
+          </p>
         </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section class="section" id="skills">
-        <div class="container">
-            <div class="section-heading">
-                <div class="section-label">02 / Skills</div>
-                <h2>Tools I work with.</h2>
-            </div>
-
-            <div class="skills-grid">
-                <div class="skill">HTML</div>
-                <div class="skill">CSS</div>
-                <div class="skill">JavaScript</div>
-                <div class="skill">PHP</div>
-                <div class="skill">Java</div>
-                <div class="skill">Python</div>
-                <div class="skill">Angular</div>
-                <div class="skill">MySQL</div>
-                <div class="skill">GitHub</div>
-                <div class="skill">REST APIs</div>
-                <div class="skill">Responsive Design</div>
-                <div class="skill">Problem Solving</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section class="section" id="projects">
-        <div class="container">
-            <div class="section-heading">
-                <div class="section-label">03 / Projects</div>
-                <h2>Things I've built.</h2>
-            </div>
-
-            <div class="projects-grid">
-
-                <!-- Project 1 -->
-                <article class="project-card">
-                    <div>
-                        <div class="project-number">PROJECT 01</div>
-
-                        <h3>EcoCheck Quiz</h3>
-
-                        <p>
-                            An interactive quiz project designed to encourage
-                            environmental awareness through engaging questions
-                            and an easy-to-use interface alongwith a persoanlized carbon footprint calculator..
-                        </p>
-                    </div>
-
-                    <div class="project-footer">
-                        <span class="project-type">Web Project</span>
-
-                        <a href="https://github.com/Sanaya-Gaonkar"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="project-link">
-                            View on GitHub
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Project 2 -->
-                <article class="project-card">
-                    <div>
-                        <div class="project-number">PROJECT 02</div>
-
-                        <h3>Student Marketplace</h3>
-
-                        <p>
-                            A student-focused marketplace concept that allows
-                            users to explore and exchange products through a
-                            simple and accessible web interface.
-                        </p>
-                    </div>
-
-                    <div class="project-footer">
-                        <span class="project-type">Web Application</span>
-
-                        <a href="https://github.com/Sanaya-Gaonkar"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="project-link">
-                            View on GitHub
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                </article>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="section" id="contact">
-        <div class="container">
-            <div class="contact-box">
-                <div class="section-label">04 / Contact</div>
-
-                <h2>Let's connect.</h2>
-
-                <p>
-                    I am always open to learning, collaborating on interesting
-                    projects, and exploring new opportunities in technology.
-                </p>
-
-                <a href="mailto:sanayagaonkar13@gmail.com"
-                   class="btn btn-primary">
-                    Email Me
-                    <i class="fa-solid fa-paper-plane"></i>
-                </a>
-
-                <div class="social-links">
-                    <a href="https://github.com/Sanaya-Gaonkar"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       aria-label="GitHub">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-
-                    <a href="https://www.linkedin.com/in/sanaya-gaonkar-616547396"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       aria-label="LinkedIn">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </a>
-
-                    <a href="mailto:sanayagaonkar13@gmail.com"
-                       aria-label="Email">
-                        <i class="fa-solid fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
+        <div class="about-grid">
+          <div class="about-copy reveal">
             <p>
-                © <span id="year"></span> Sanaya Gaonkar. Built with curiosity
-                and creativity.
+              I am a Computer Engineering student with an interest in creating useful,
+              interactive, and user-friendly digital solutions.
             </p>
+            <p>
+              I enjoy exploring different technologies, experimenting with development
+              tools, and working on projects that solve everyday problems—from
+              student-focused platforms to AI-assisted guidance tools.
+            </p>
+            <p>
+              I’m continuously improving my technical skills and looking for
+              opportunities to gain practical experience, collaborate with others,
+              and grow as a developer.
+            </p>
+          </div>
+
+          <aside class="detail-card reveal">
+            <h3>Quick details</h3>
+
+            <div class="detail-row">
+              <i class="fa-solid fa-user" aria-hidden="true"></i>
+              <span>Sanaya Gaonkar</span>
+            </div>
+
+            <div class="detail-row">
+              <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+              <span>Computer Engineering Student</span>
+            </div>
+
+            <div class="detail-row">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+              <span>Goa, India</span>
+            </div>
+
+            <div class="detail-row">
+              <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+              <a href="mailto:sanayagaonkar13@gmail.com">sanayagaonkar13@gmail.com</a>
+            </div>
+          </aside>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <!-- JavaScript -->
-    <script>
-        // Update footer year
-        document.getElementById("year").textContent =
-            new Date().getFullYear();
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="eyebrow">02 / Skills</div>
+          <h2>Tools I work with.</h2>
+          <p class="section-intro">
+            A growing toolkit across frontend development, backend development,
+            databases, and AI-assisted applications.
+          </p>
+        </div>
 
-        // Custom cursor
-        const cursor = document.querySelector(".cursor");
+        <div class="skills-groups-single">
+          <div class="skill-group reveal">
+            <div class="skill-tags">
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Responsive Design</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">PHP</span>
+              <span class="skill-tag">REST APIs</span>
+              <span class="skill-tag">C/C++</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">R</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">SQL / MySQL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        document.addEventListener("mousemove", function(event) {
-            cursor.style.left = event.clientX + "px";
-            cursor.style.top = event.clientY + "px";
-        });
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="eyebrow">03 / Selected work</div>
+          <h2>Things I've built.</h2>
+          <p class="section-intro">
+            A selection of projects exploring sustainability, student communities,
+            peer learning, AI-assisted career guidance, and interactive games.
+          </p>
+        </div>
 
-        document.querySelectorAll("a, button").forEach(function(element) {
-            element.addEventListener("mouseenter", function() {
-                cursor.classList.add("active");
-            });
+        <div class="projects-grid">
 
-            element.addEventListener("mouseleave", function() {
-                cursor.classList.remove("active");
-            });
-        });
+          <article class="project-card reveal">
+            <div>
+              <div class="project-topline">
+                <span class="project-number">PROJECT 01</span>
+                <span class="project-icon"><i class="fa-solid fa-leaf" aria-hidden="true"></i></span>
+              </div>
+              <h3>EcoCheck</h3>
+              <p>
+                An environmental awareness web application featuring daily
+                sustainability quizzes, eco-friendly tips, progress tracking,
+                and a personalized carbon footprint calculator.
+              </p>
+              <div class="project-tech">
+                <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+                <span>PHP</span><span>MySQL</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span class="project-type">Sustainability · Web App</span>
+              <a class="project-link" href="https://github.com/Sanaya-Gaonkar/EcoCheck.git" target="_blank" rel="noopener noreferrer">
+                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
 
-        // Register GSAP ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
+          <article class="project-card reveal">
+            <div>
+              <div class="project-topline">
+                <span class="project-number">PROJECT 02</span>
+                <span class="project-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></span>
+              </div>
+              <h3>FleaGo — Student Marketplace</h3>
+              <p>
+                A campus-focused marketplace that helps students find useful items,
+                sell things they no longer need, and exchange products within their
+                college community.
+              </p>
+              <div class="project-tech">
+                <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+                <span>PHP</span><span>MySQL</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span class="project-type">Campus Community · Web App</span>
+              <a class="project-link" href="https://github.com/Sanaya-Gaonkar/FleaGo_Campus-Marketplace.git" target="_blank" rel="noopener noreferrer">
+                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
 
-        // Hero animations
-        gsap.from(".hero-tag", {
-            opacity: 0,
-            y: 25,
-            duration: 0.8,
-            ease: "power3.out"
-        });
+          <article class="project-card reveal">
+            <div>
+              <div class="project-topline">
+                <span class="project-number">PROJECT 03</span>
+                <span class="project-icon"><i class="fa-solid fa-compass" aria-hidden="true"></i></span>
+              </div>
+              <h3>AI Student & Career Agent</h3>
+              <p>
+                An AI-assisted student guidance platform that analyzes student
+                profiles, recommends courses and career paths, checks admission
+                eligibility, and creates personalized action plans.
+              </p>
+              <div class="project-tech">
+                <span>AI</span><span>Student Guidance</span><span>Career Planning</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span class="project-type">AI · Career Guidance</span>
+              <a class="project-link" href="https://github.com/sachimithbauker2305/AI-Student-Career-Agent.git" target="_blank" rel="noopener noreferrer">
+                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
 
-        gsap.from(".hero h1", {
-            opacity: 0,
-            y: 45,
-            duration: 1,
-            delay: 0.2,
-            ease: "power3.out"
-        });
+          <article class="project-card reveal">
+            <div>
+              <div class="project-topline">
+                <span class="project-number">PROJECT 04</span>
+                <span class="project-icon"><i class="fa-solid fa-people-arrows-left-right" aria-hidden="true"></i></span>
+              </div>
+              <h3>SkillSwap</h3>
+              <p>
+                A peer-to-peer learning platform where people can connect to teach
+                skills they know and learn skills they want to develop.
+              </p>
+              <div class="project-tech">
+                <span>Peer Learning</span><span>Web Development</span><span>Skill Exchange</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span class="project-type">Peer Learning · Web App</span>
+              <a class="project-link" href="https://github.com/Sanaya-Gaonkar/SkillSwap.git" target="_blank" rel="noopener noreferrer">
+                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
 
-        gsap.from(".hero-description", {
-            opacity: 0,
-            y: 25,
-            duration: 0.8,
-            delay: 0.4,
-            ease: "power3.out"
-        });
+          <article class="project-card reveal">
+            <div>
+              <div class="project-topline">
+                <span class="project-number">PROJECT 05</span>
+                <span class="project-icon"><i class="fa-solid fa-hand-scissors" aria-hidden="true"></i></span>
+              </div>
+              <h3>AI Rock Paper Scissors</h3>
+              <p>
+                An interactive Rock Paper Scissors game featuring player-versus-computer
+                gameplay and AI-related game logic.
+              </p>
+              <div class="project-tech">
+                <span>AI</span><span>Game Logic</span><span>Interactive Application</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span class="project-type">AI · Game</span>
+              <a class="project-link" href="https://github.com/sachimithbauker2305/RPS.git" target="_blank" rel="noopener noreferrer">
+                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
 
-        gsap.from(".hero-buttons", {
-            opacity: 0,
-            y: 25,
-            duration: 0.8,
-            delay: 0.6,
-            ease: "power3.out"
-        });
+        </div>
+      </div>
+    </section>
 
-        // Section animations
-        gsap.utils.toArray(".section-heading").forEach(function(section) {
-            gsap.from(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 85%"
-                },
-                opacity: 0,
-                y: 35,
-                duration: 0.8,
-                ease: "power3.out"
-            });
-        });
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-box reveal">
+          <div class="eyebrow">04 / Contact</div>
+          <h2>Let's connect.</h2>
+          <p>
+            I’m open to learning opportunities, collaborating on interesting projects,
+            and connecting with people who enjoy building useful things with technology.
+          </p>
 
-        gsap.utils.toArray(".about-text, .about-card").forEach(function(item) {
-            gsap.from(item, {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 85%"
-                },
-                opacity: 0,
-                y: 35,
-                duration: 0.8,
-                ease: "power3.out"
-            });
-        });
+          <a href="mailto:sanayagaonkar13@gmail.com" class="button button-primary">
+            Email me <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          </a>
 
-        gsap.from(".skill", {
-            scrollTrigger: {
-                trigger: ".skills-grid",
-                start: "top 85%"
-            },
-            opacity: 0,
-            y: 20,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: "power2.out"
-        });
+          <div class="social-links">
+            <a href="https://github.com/Sanaya-Gaonkar" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <i class="fa-brands fa-github" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/sanaya-gaonkar-616547396" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            </a>
+            <a href="mailto:sanayagaonkar13@gmail.com" aria-label="Email">
+              <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        gsap.from(".project-card", {
-            scrollTrigger: {
-                trigger: ".projects-grid",
-                start: "top 85%"
-            },
-            opacity: 0,
-            y: 40,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Sanaya Gaonkar · Built with curiosity and care.</p>
+    </div>
+  </footer>
 
-        gsap.from(".contact-box", {
-            scrollTrigger: {
-                trigger: ".contact-box",
-                start: "top 85%"
-            },
-            opacity: 0,
-            y: 40,
-            duration: 0.8,
-            ease: "power3.out"
-        });
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-        // 3D project card tilt effect
-        document.querySelectorAll(".project-card").forEach(function(card) {
-            card.addEventListener("mousemove", function(event) {
-                const rect = card.getBoundingClientRect();
+    const menuButton = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
 
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
+    menuButton.addEventListener("click", function () {
+      const isOpen = navLinks.classList.toggle("open");
 
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
+      );
 
-                const rotateX = ((y - centerY) / centerY) * -4;
-                const rotateY = ((x - centerX) / centerX) * 4;
+      menuButton.innerHTML = isOpen
+        ? '<i class="fa-solid fa-xmark" aria-hidden="true"></i>'
+        : '<i class="fa-solid fa-bars" aria-hidden="true"></i>';
+    });
 
-                card.style.transform =
-                    `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Open navigation menu");
+        menuButton.innerHTML =
+          '<i class="fa-solid fa-bars" aria-hidden="true"></i>';
+      });
+    });
 
-            card.addEventListener("mouseleave", function() {
-                card.style.transform =
-                    "perspective(900px) rotateX(0deg) rotateY(0deg)";
-            });
-        });
-    </script>
+    const revealObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
+    document.querySelectorAll(".reveal").forEach(function (element) {
+      revealObserver.observe(element);
+    });
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".reveal").forEach(function (element) {
+        element.classList.add("visible");
+      });
+    }
+  </script>
 </body>
 </html>
